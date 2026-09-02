@@ -1,0 +1,66 @@
+{{ 'ww-brand.css' | asset_url | stylesheet_tag }}
+<section class="ww ww-section ww-hero" style="padding-block-start:{{ section.settings.pad_top }}px;padding-block-end:{{ section.settings.pad_bottom }}px">
+  <div class="ww-wrap">
+    <div class="ww-hero__grid">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="ww-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h1 class="ww-hero__title">{{ section.settings.title }}</h1>
+        {%- if section.settings.lede != blank -%}
+          <p class="ww-hero__lede">{{ section.settings.lede }}</p>
+        {%- endif -%}
+        <div class="ww-hero__cta">
+          {%- if section.settings.cta_label != blank -%}
+            <a class="ww-btn ww-btn--primary" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">
+              {{ section.settings.cta_label }}
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" width="16" height="16"><path d="M4 10h11M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.cta2_label != blank -%}
+            <a class="ww-btn ww-btn--ghost" href="{{ section.settings.cta2_link }}">{{ section.settings.cta2_label }}</a>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.show_ladder -%}
+          <div class="ww-ladder">
+            <span class="ww-chip">Starting at <strong>{{ section.settings.price_from }}</strong></span>
+            <span class="ww-chip"><strong>Cash on Delivery</strong> nationwide</span>
+            <span class="ww-chip"><strong>7-day</strong> replacement</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="ww-hero__media">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1200 | image_tag:
+              loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 900px) 46vw, 100vw',
+              widths: '480,720,960,1200', alt: section.settings.image.alt | default: section.settings.title }}
+        {%- else -%}
+          <span class="ww-hero__media--empty">Hero product image</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "W&W Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Gadgets for Pakistan" },
+    { "type": "html", "id": "title", "label": "Heading", "default": "Un-bore <em>your tech</em>." },
+    { "type": "textarea", "id": "lede", "label": "Supporting text", "default": "Hand-picked gadgets that actually last, delivered anywhere in Pakistan. Pay cash when it reaches your door." },
+    { "type": "text", "id": "cta_label", "label": "Primary button", "default": "Shop best sellers" },
+    { "type": "url", "id": "cta_link", "label": "Primary link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary button", "default": "Under Rs 1,500" },
+    { "type": "url", "id": "cta2_link", "label": "Secondary link" },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "checkbox", "id": "show_ladder", "label": "Show trust chips", "default": true },
+    { "type": "text", "id": "price_from", "label": "Lowest price", "default": "Rs 990" },
+    { "type": "range", "id": "pad_top", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Padding top", "default": 88 },
+    { "type": "range", "id": "pad_bottom", "min": 0, "max": 160, "step": 8, "unit": "px", "label": "Padding bottom", "default": 88 }
+  ],
+  "presets": [{ "name": "W&W Hero" }]
+}
+{% endschema %}

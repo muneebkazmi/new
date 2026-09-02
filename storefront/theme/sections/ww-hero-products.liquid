@@ -1,0 +1,97 @@
+{{ 'ww-brand.css' | asset_url | stylesheet_tag }}
+<section class="ww ww-section ww-heroes">
+  <div class="ww-wrap">
+    <div class="ww-heroes__head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="ww-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="ww-h2">{{ section.settings.title }}</h2>
+        {%- if section.settings.body != blank -%}<p class="ww-sub">{{ section.settings.body }}</p>{%- endif -%}
+      </div>
+      {%- if section.settings.link_label != blank -%}
+        <a class="ww-btn ww-btn--ghost" href="{{ section.settings.link | default: routes.all_products_collection_url }}">{{ section.settings.link_label }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="ww-cards">
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- if p != blank -%}
+          <a class="ww-card" href="{{ p.url }}" {{ block.shopify_attributes }}>
+            <div class="ww-card__media">
+              {%- if block.settings.rank != blank -%}<span class="ww-card__rank">{{ block.settings.rank }}</span>{%- endif -%}
+              {%- if p.featured_image -%}
+                {{ p.featured_image | image_url: width: 800 | image_tag:
+                    loading: 'lazy', sizes: '(min-width: 900px) 22vw, 45vw',
+                    widths: '300,450,600,800', alt: p.featured_image.alt | default: p.title }}
+              {%- else -%}
+                <span class="ww-card__ph">No image yet</span>
+              {%- endif -%}
+            </div>
+            <div class="ww-card__body">
+              {%- if block.settings.hook != blank -%}<span class="ww-card__hook">{{ block.settings.hook }}</span>{%- endif -%}
+              <h3 class="ww-card__title">{{ p.title }}</h3>
+              <div class="ww-card__foot">
+                <span class="ww-card__price">{{ p.price | money }}</span>
+                {%- if p.compare_at_price > p.price -%}
+                  <span class="ww-card__was">{{ p.compare_at_price | money }}</span>
+                {%- endif -%}
+              </div>
+              {%- if section.settings.show_cod -%}<span class="ww-card__cod">COD available</span>{%- endif -%}
+            </div>
+          </a>
+        {%- else -%}
+          <div class="ww-card" {{ block.shopify_attributes }}>
+            <div class="ww-card__media">
+              {%- if block.settings.rank != blank -%}<span class="ww-card__rank">{{ block.settings.rank }}</span>{%- endif -%}
+              <span class="ww-card__ph">Pick a product</span>
+            </div>
+            <div class="ww-card__body">
+              {%- if block.settings.hook != blank -%}<span class="ww-card__hook">{{ block.settings.hook }}</span>{%- endif -%}
+              <h3 class="ww-card__title">{{ block.settings.placeholder_title | default: 'Hero product slot' }}</h3>
+              <div class="ww-card__foot">
+                <span class="ww-card__price">{{ block.settings.placeholder_price }}</span>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "W&W Hero products",
+  "tag": "section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The shortlist" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Five things worth your money" },
+    { "type": "textarea", "id": "body", "label": "Supporting text", "default": "Picked for how fast they sell and how rarely they come back. Every one ships Cash on Delivery." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "See everything" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "checkbox", "id": "show_cod", "label": "Show COD badge", "default": true }
+  ],
+  "blocks": [{
+    "type": "hero",
+    "name": "Hero product",
+    "settings": [
+      { "type": "product", "id": "product", "label": "Product" },
+      { "type": "text", "id": "rank", "label": "Rank badge", "default": "01" },
+      { "type": "text", "id": "hook", "label": "Hook", "default": "Best seller" },
+      { "type": "text", "id": "placeholder_title", "label": "Placeholder title" },
+      { "type": "text", "id": "placeholder_price", "label": "Placeholder price" }
+    ]
+  }],
+  "presets": [{
+    "name": "W&W Hero products",
+    "blocks": [
+      { "type": "hero", "settings": { "rank": "01", "hook": "Impulse buy", "placeholder_title": "360 Magnetic Phone Holder", "placeholder_price": "Rs 990" }},
+      { "type": "hero", "settings": { "rank": "02", "hook": "Bundle", "placeholder_title": "20W Fast Charger + Type-C Cable", "placeholder_price": "Rs 1,490" }},
+      { "type": "hero", "settings": { "rank": "03", "hook": "Fastest mover", "placeholder_title": "Bluetooth Neckband", "placeholder_price": "Rs 2,490" }},
+      { "type": "hero", "settings": { "rank": "04", "hook": "Load-shedding proof", "placeholder_title": "10,000mAh Power Bank", "placeholder_price": "Rs 3,490" }},
+      { "type": "hero", "settings": { "rank": "05", "hook": "The hero", "placeholder_title": "Smart Watch, BT Calling", "placeholder_price": "Rs 4,990" }}
+    ]
+  }]
+}
+{% endschema %}

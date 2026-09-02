@@ -1,0 +1,47 @@
+{{ 'ww-brand.css' | asset_url | stylesheet_tag }}
+<section class="ww ww-section ww-why">
+  <div class="ww-wrap">
+    {%- if section.settings.eyebrow != blank -%}<span class="ww-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    <h2 class="ww-h2">{{ section.settings.title }}</h2>
+    {%- if section.settings.body != blank -%}<p class="ww-sub">{{ section.settings.body }}</p>{%- endif -%}
+    <div class="ww-why__grid">
+      {%- for block in section.blocks -%}
+        <div class="ww-why__item" {{ block.shopify_attributes }}>
+          <span class="ww-why__n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="ww-why__t">{{ block.settings.title }}</h3>
+          <p class="ww-why__d">{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "W&W Why us",
+  "tag": "section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why buy here" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Ordering online shouldn't feel like a gamble" },
+    { "type": "textarea", "id": "body", "label": "Supporting text", "default": "You have been burned before. Here is exactly how we handle your order." }
+  ],
+  "blocks": [{
+    "type": "item",
+    "name": "Reason",
+    "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Pay nothing up front" },
+      { "type": "textarea", "id": "body", "label": "Body", "default": "Cash on Delivery across Pakistan. Your money stays with you until the parcel is in your hand." }
+    ]
+  }],
+  "presets": [{
+    "name": "W&W Why us",
+    "blocks": [
+      { "type": "item", "settings": { "title": "Pay nothing up front", "body": "Cash on Delivery across Pakistan. Your money stays with you until the parcel is in your hand." }},
+      { "type": "item", "settings": { "title": "We confirm before we ship", "body": "A quick call or WhatsApp message before dispatch, so nothing turns up that you did not actually order." }},
+      { "type": "item", "settings": { "title": "Checked before it leaves", "body": "Every unit is powered on and inspected. Chargers get tested, watches get paired, cables get plugged in." }},
+      { "type": "item", "settings": { "title": "A real person answers", "body": "WhatsApp us between 9am and 9pm and you will get a human, not an auto-reply." }}
+    ]
+  }]
+}
+{% endschema %}

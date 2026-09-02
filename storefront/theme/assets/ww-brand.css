@@ -1,0 +1,264 @@
+/* ==========================================================================
+   Wired & Warped — dark premium tech design system
+   Layered over Horizon. Horizon's own components inherit the dark palette
+   from settings.color_palette; this file adds the brand treatment on top.
+   ========================================================================== */
+
+:root {
+  --ww-bg: #08090B;
+  --ww-surface: #101318;
+  --ww-surface-2: #161B22;
+  --ww-line: #1E2430;
+  --ww-line-bright: #2A3340;
+  --ww-text: #F4F6F8;
+  --ww-muted: #8A94A6;
+  --ww-accent: #22D3EE;
+  --ww-accent-deep: #06B6D4;
+  --ww-amber: #F59E0B;
+
+  --ww-radius: 14px;
+  --ww-radius-lg: 22px;
+  --ww-maxw: 1280px;
+
+  /* Fluid type — scales without media queries, safe down to 320px */
+  --ww-display: clamp(2.5rem, 1.4rem + 5.4vw, 5.25rem);
+  --ww-h2: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem);
+  --ww-h3: clamp(1.25rem, 1.05rem + 0.9vw, 1.6rem);
+  --ww-body: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+
+  --ww-pad: clamp(1.15rem, 0.7rem + 2.2vw, 3rem);
+  --ww-gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+}
+
+/* --------------------------------------------------------------- primitives */
+.ww { box-sizing: border-box; }
+.ww *, .ww *::before, .ww *::after { box-sizing: inherit; }
+
+.ww-wrap {
+  width: 100%;
+  max-width: var(--ww-maxw);
+  margin-inline: auto;
+  padding-inline: var(--ww-pad);
+}
+
+.ww-section { position: relative; background: var(--ww-bg); color: var(--ww-text); }
+
+.ww-eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: .7rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ww-accent);
+}
+.ww-eyebrow::before {
+  content: ""; inline-size: 1.5rem; block-size: 1px;
+  background: currentColor; opacity: .7;
+}
+
+.ww-h2 {
+  font-size: var(--ww-h2); line-height: 1.08; letter-spacing: -0.02em;
+  font-weight: 700; margin: .6rem 0 0; color: var(--ww-text); text-wrap: balance;
+}
+.ww-sub {
+  font-size: var(--ww-body); line-height: 1.65; color: var(--ww-muted);
+  margin: .85rem 0 0; max-width: 56ch; text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------------ buttons */
+.ww-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  padding: .95rem 1.7rem; border-radius: var(--ww-radius);
+  font-size: .95rem; font-weight: 650; letter-spacing: -0.01em;
+  text-decoration: none; cursor: pointer; border: 1px solid transparent;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.ww-btn--primary {
+  background: var(--ww-accent); color: #04252B;
+  box-shadow: 0 0 0 0 rgba(34, 211, 238, .5);
+}
+.ww-btn--primary:hover {
+  background: #3EDDF5; transform: translateY(-2px);
+  box-shadow: 0 10px 34px -10px rgba(34, 211, 238, .75);
+}
+.ww-btn--ghost {
+  background: transparent; color: var(--ww-text); border-color: var(--ww-line-bright);
+}
+.ww-btn--ghost:hover { border-color: var(--ww-accent); color: var(--ww-accent); }
+
+.ww-btn:focus-visible,
+.ww-card:focus-visible,
+.ww-wa:focus-visible {
+  outline: 2px solid var(--ww-accent); outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------- hero */
+.ww-hero {
+  position: relative; overflow: hidden;
+  background: var(--ww-bg);
+  padding-block: clamp(3.5rem, 2rem + 9vw, 8rem);
+  isolation: isolate;
+}
+/* the glow — pure CSS so the hero looks finished before product art exists */
+.ww-hero::before {
+  content: ""; position: absolute; z-index: -2;
+  inset-block-start: -30%; inset-inline-start: 50%;
+  inline-size: min(1100px, 140vw); aspect-ratio: 1;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 50% 50%,
+    rgba(34, 211, 238, .22) 0%,
+    rgba(34, 211, 238, .09) 32%,
+    rgba(8, 9, 11, 0) 68%);
+  pointer-events: none;
+}
+/* fine grid, keeps large black areas from reading as flat/empty */
+.ww-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,.028) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.028) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 90% 65% at 50% 30%, #000 20%, transparent 78%);
+}
+
+.ww-hero__grid {
+  display: grid; gap: var(--ww-gap); align-items: center;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .ww-hero__grid { grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 4vw, 4rem); }
+}
+
+.ww-hero__title {
+  font-size: var(--ww-display); line-height: .96; letter-spacing: -0.035em;
+  font-weight: 800; margin: 1rem 0 0; text-wrap: balance;
+}
+.ww-hero__title em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--ww-accent) 0%, #A5F3FC 55%, var(--ww-accent-deep) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ww-hero__lede {
+  font-size: clamp(1rem, .95rem + .35vw, 1.15rem); line-height: 1.6;
+  color: var(--ww-muted); margin: 1.25rem 0 0; max-width: 46ch;
+}
+.ww-hero__cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2rem; }
+
+.ww-hero__media {
+  position: relative; border-radius: var(--ww-radius-lg); overflow: hidden;
+  background: linear-gradient(160deg, var(--ww-surface-2), var(--ww-surface));
+  border: 1px solid var(--ww-line);
+  aspect-ratio: 4 / 3;
+  display: grid; place-items: center;
+}
+.ww-hero__media img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+.ww-hero__media--empty { color: var(--ww-muted); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; }
+
+/* price ladder chips under the hero */
+.ww-ladder { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.75rem; }
+.ww-chip {
+  font-size: .78rem; font-weight: 600; color: var(--ww-muted);
+  padding: .45rem .8rem; border: 1px solid var(--ww-line);
+  border-radius: 999px; background: rgba(255,255,255,.02);
+}
+.ww-chip strong { color: var(--ww-text); font-weight: 700; }
+
+/* ---------------------------------------------------------------- trust bar */
+.ww-trust {
+  border-block: 1px solid var(--ww-line);
+  background: linear-gradient(180deg, rgba(34,211,238,.045), rgba(8,9,11,0));
+}
+.ww-trust__grid {
+  display: grid; gap: 1px; background: var(--ww-line);
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 780px) { .ww-trust__grid { grid-template-columns: repeat(4, 1fr); } }
+
+.ww-trust__item {
+  background: var(--ww-bg); padding: 1.35rem clamp(.9rem, 2vw, 1.5rem);
+  display: flex; flex-direction: column; gap: .3rem; align-items: flex-start;
+}
+.ww-trust__icon { color: var(--ww-accent); inline-size: 20px; block-size: 20px; }
+.ww-trust__t { font-size: .9rem; font-weight: 650; color: var(--ww-text); }
+.ww-trust__d { font-size: .78rem; line-height: 1.5; color: var(--ww-muted); }
+
+/* --------------------------------------------------------------- hero cards */
+.ww-heroes { padding-block: clamp(3rem, 2rem + 5vw, 6rem); }
+.ww-heroes__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; }
+
+.ww-cards {
+  display: grid; gap: clamp(.85rem, 1.6vw, 1.4rem); margin-top: 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+.ww-card {
+  position: relative; display: flex; flex-direction: column;
+  background: var(--ww-surface); border: 1px solid var(--ww-line);
+  border-radius: var(--ww-radius-lg); overflow: hidden; text-decoration: none;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+.ww-card:hover {
+  transform: translateY(-4px); border-color: var(--ww-line-bright);
+  box-shadow: 0 20px 50px -24px rgba(0,0,0,.9), 0 0 0 1px rgba(34,211,238,.14);
+}
+.ww-card__media {
+  position: relative; aspect-ratio: 1; overflow: hidden;
+  background: radial-gradient(circle at 50% 115%, rgba(34,211,238,.16), rgba(16,19,24,0) 62%), var(--ww-surface-2);
+  display: grid; place-items: center;
+}
+.ww-card__media img {
+  inline-size: 100%; block-size: 100%; object-fit: cover; display: block;
+  transition: transform .4s cubic-bezier(.2,.7,.3,1);
+}
+.ww-card:hover .ww-card__media img { transform: scale(1.045); }
+.ww-card__ph { color: var(--ww-line-bright); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
+
+.ww-card__rank {
+  position: absolute; inset-block-start: .7rem; inset-inline-start: .7rem;
+  font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+  color: var(--ww-accent); background: rgba(8,9,11,.75);
+  border: 1px solid rgba(34,211,238,.3); backdrop-filter: blur(6px);
+  padding: .3rem .55rem; border-radius: 999px;
+}
+.ww-card__body { padding: 1rem 1.05rem 1.15rem; display: flex; flex-direction: column; gap: .3rem; flex: 1; }
+.ww-card__hook { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ww-muted); }
+.ww-card__title { font-size: .98rem; font-weight: 650; line-height: 1.3; color: var(--ww-text); margin: 0; }
+.ww-card__foot { margin-top: auto; padding-top: .8rem; display: flex; align-items: baseline; gap: .5rem; }
+.ww-card__price { font-size: 1.1rem; font-weight: 750; color: var(--ww-text); letter-spacing: -0.02em; }
+.ww-card__was { font-size: .82rem; color: var(--ww-muted); text-decoration: line-through; }
+.ww-card__cod {
+  margin-top: .55rem; align-self: flex-start;
+  font-size: .68rem; font-weight: 650; letter-spacing: .04em;
+  color: var(--ww-amber); border: 1px solid rgba(245,158,11,.32);
+  background: rgba(245,158,11,.08); padding: .25rem .5rem; border-radius: 6px;
+}
+
+/* ---------------------------------------------------------------------- why */
+.ww-why { padding-block: clamp(3rem, 2rem + 5vw, 6rem); border-block-start: 1px solid var(--ww-line); }
+.ww-why__grid { display: grid; gap: var(--ww-gap); margin-top: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+.ww-why__item { padding: 1.5rem; border: 1px solid var(--ww-line); border-radius: var(--ww-radius-lg); background: var(--ww-surface); }
+.ww-why__n { font-size: .72rem; font-weight: 700; color: var(--ww-accent); letter-spacing: .12em; }
+.ww-why__t { font-size: 1.05rem; font-weight: 650; margin: .7rem 0 .4rem; color: var(--ww-text); }
+.ww-why__d { font-size: .88rem; line-height: 1.6; color: var(--ww-muted); margin: 0; }
+
+/* ----------------------------------------------------------- whatsapp float */
+.ww-wa {
+  position: fixed; z-index: 60;
+  inset-block-end: max(1.1rem, env(safe-area-inset-bottom));
+  inset-inline-end: 1.1rem;
+  display: inline-flex; align-items: center; gap: .6rem;
+  padding: .8rem 1.15rem; border-radius: 999px;
+  background: #25D366; color: #04240F; font-weight: 700; font-size: .9rem;
+  text-decoration: none; box-shadow: 0 14px 36px -12px rgba(37,211,102,.75);
+  transition: transform .18s ease;
+}
+.ww-wa:hover { transform: translateY(-2px); }
+.ww-wa svg { inline-size: 20px; block-size: 20px; flex: none; }
+@media (max-width: 640px) { .ww-wa__label { display: none; } .ww-wa { padding: .85rem; } }
+
+/* ------------------------------------------------------------- a11y/motion  */
+@media (prefers-reduced-motion: reduce) {
+  .ww-card, .ww-card__media img, .ww-btn, .ww-wa { transition: none; }
+  .ww-card:hover, .ww-btn--primary:hover, .ww-wa:hover { transform: none; }
+  .ww-card:hover .ww-card__media img { transform: none; }
+}
+.ww-visually-hidden {
+  position: absolute; inline-size: 1px; block-size: 1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}

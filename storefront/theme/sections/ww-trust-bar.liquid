@@ -1,0 +1,53 @@
+{{ 'ww-brand.css' | asset_url | stylesheet_tag }}
+<section class="ww ww-section ww-trust">
+  <div class="ww-wrap" style="padding-inline:0">
+    <div class="ww-trust__grid">
+      {%- for block in section.blocks -%}
+        <div class="ww-trust__item" {{ block.shopify_attributes }}>
+          <svg class="ww-trust__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'cash' -%}<rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.7"/>
+              {%- when 'truck' -%}<path d="M2 7h11v10H2zM13 10h4l3 3v4h-7z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="6" cy="18" r="1.8" stroke="currentColor" stroke-width="1.7"/><circle cx="17" cy="18" r="1.8" stroke="currentColor" stroke-width="1.7"/>
+              {%- when 'shield' -%}<path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              {%- else -%}<path d="M21 12a9 9 0 1 1-3.5-7.1L21 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            {%- endcase -%}
+          </svg>
+          <span class="ww-trust__t">{{ block.settings.title }}</span>
+          <span class="ww-trust__d">{{ block.settings.body }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "W&W Trust bar",
+  "tag": "section",
+  "max_blocks": 4,
+  "blocks": [{
+    "type": "item",
+    "name": "Trust item",
+    "settings": [
+      { "type": "select", "id": "icon", "label": "Icon", "default": "cash",
+        "options": [
+          { "value": "cash", "label": "Cash" },
+          { "value": "truck", "label": "Delivery" },
+          { "value": "shield", "label": "Guarantee" },
+          { "value": "clock", "label": "Support" }
+        ]},
+      { "type": "text", "id": "title", "label": "Title", "default": "Cash on Delivery" },
+      { "type": "text", "id": "body", "label": "Description", "default": "Pay only when it arrives" }
+    ]
+  }],
+  "presets": [{
+    "name": "W&W Trust bar",
+    "blocks": [
+      { "type": "item", "settings": { "icon": "cash", "title": "Cash on Delivery", "body": "Pay only when it reaches you" }},
+      { "type": "item", "settings": { "icon": "truck", "title": "Pakistan-wide delivery", "body": "2-5 days, all major cities" }},
+      { "type": "item", "settings": { "icon": "shield", "title": "7-day replacement", "body": "Damaged or wrong item, we replace it" }},
+      { "type": "item", "settings": { "icon": "clock", "title": "WhatsApp support", "body": "9am-9pm, every day" }}
+    ]
+  }]
+}
+{% endschema %}
