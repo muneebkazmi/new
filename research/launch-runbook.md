@@ -89,3 +89,38 @@ rating and dispatch speed once the catalogue is reachable.
 - Horizon's `footer-utilities` section painted its background with `color_palette.foreground`.
   On a dark palette that renders a white slab across the page footer. Fixed in
   `sections/footer-group.json`.
+
+---
+
+# LIVE — 2026-09-18
+
+Theme **Wired & Warped — Dark** published. All **47 products ACTIVE**, PKR, published to
+Online Store and Shop. 16 old Printify products remain archived and recoverable.
+
+Navigation rebuilt: Grooming (with Shaving & Trimming / Hair Styling / Hair Removal),
+Watches, Home & Bedding, Wallets, Under Rs 2,000, Contact.
+
+## Still to do
+
+1. **Policies** — `policies/` holds rewritten Refund and Delivery text to paste at
+   Settings → Policies. I lack the `write_legal_policies` scope. This is the most urgent
+   item: the current refund policy says "all sales are final, no returns" while every
+   product page promises 7-day replacement.
+2. **Shipping rates** — not set. Needs the per-product delivery + cash-handling figures
+   from Markaz's pricing step. Without a rate, checkout may not charge delivery at all,
+   which means the courier collects more than the site quoted.
+3. **Store meta description** — still reads "free shipping to the US & UK".
+   Settings → General. No API for it.
+4. **Location** still United Kingdom; **timezone** still Europe/London. Settings.
+5. **Uninstall Printify and CJdropshipping.** Terms of Service still names Printify.
+6. **Delete the `top-sellers` collection** (8 archived products) once you are happy.
+7. **Rename blankets and the two chain watches** if the photos show something more
+   specific than the colour recorded in the export. I could not see the images.
+
+## Operating reality
+
+Every order must be placed manually on Markaz with the customer's address. Nothing
+connects Shopify orders to Markaz now that their Shopify app is delisted.
+
+Margins are thin: the worked example earns Rs 144 on a Rs 682 order. One refused COD
+parcel wipes out several sales. Worth reviewing Markaz prices before spending on ads.
