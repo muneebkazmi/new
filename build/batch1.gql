@@ -1,0 +1,10 @@
+mutation Set($i1: ProductSetInput!, $i2: ProductSetInput!, $i3: ProductSetInput!, $i4: ProductSetInput!, $i5: ProductSetInput!, $i6: ProductSetInput!, $i7: ProductSetInput!, $i8: ProductSetInput!) {
+  p1: productSet(input: $i1, synchronous: false) { userErrors { field message } }
+  p2: productSet(input: $i2, synchronous: false) { userErrors { field message } }
+  p3: productSet(input: $i3, synchronous: false) { userErrors { field message } }
+  p4: productSet(input: $i4, synchronous: false) { userErrors { field message } }
+  p5: productSet(input: $i5, synchronous: false) { userErrors { field message } }
+  p6: productSet(input: $i6, synchronous: false) { userErrors { field message } }
+  p7: productSet(input: $i7, synchronous: false) { userErrors { field message } }
+  p8: productSet(input: $i8, synchronous: false) { userErrors { field message } }
+}
