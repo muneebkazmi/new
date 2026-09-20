@@ -1,7 +1,7 @@
 {{ 'ww-brand.css' | asset_url | stylesheet_tag }}
 <section class="ww ww-section ww-hero" style="padding-block-start:{{ section.settings.pad_top }}px;padding-block-end:{{ section.settings.pad_bottom }}px">
   <div class="ww-wrap">
-    <div class="ww-hero__grid">
+    <div class="ww-hero__grid{% if section.settings.image == blank %} ww-hero__grid--solo{% endif %}">
       <div>
         {%- if section.settings.eyebrow != blank -%}
           <span class="ww-eyebrow">{{ section.settings.eyebrow }}</span>
@@ -30,15 +30,13 @@
         {%- endif -%}
       </div>
 
-      <div class="ww-hero__media">
-        {%- if section.settings.image != blank -%}
+      {%- if section.settings.image != blank -%}
+        <div class="ww-hero__media">
           {{ section.settings.image | image_url: width: 1200 | image_tag:
               loading: 'eager', fetchpriority: 'high', sizes: '(min-width: 900px) 46vw, 100vw',
               widths: '480,720,960,1200', alt: section.settings.image.alt | default: section.settings.title }}
-        {%- else -%}
-          <span class="ww-hero__media--empty">Hero product image</span>
-        {%- endif -%}
-      </div>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
