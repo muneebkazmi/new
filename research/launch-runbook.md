@@ -124,3 +124,51 @@ connects Shopify orders to Markaz now that their Shopify app is delisted.
 
 Margins are thin: the worked example earns Rs 144 on a Rs 682 order. One refused COD
 parcel wipes out several sales. Worth reviewing Markaz prices before spending on ads.
+
+---
+
+# Menu + image audit — 2026-09-20
+
+## Menus, fixed
+
+- **"Grooming" pointed at `/collections/shaving-trimming`.** The top-level item took you
+  to one of its own children, and 9 of the 24 grooming products had no parent listing.
+  Created a `grooming` smart collection (tag `grooming`, 24 products) and repointed it.
+- **Footer linked to `/pages/data-sharing-opt-out`, which is unpublished** — a 404 for every
+  customer who clicked it. Footer rebuilt: About Us, Contact, Delivery, Returns &
+  Replacements, Privacy Policy, Terms of Service.
+- **About Us was still phone-case copy** ("your phone case should match your mood",
+  "Velvet Matte or Mirror Glossy") and the new footer linked straight to it. Rewritten
+  around electricals + textiles, COD and the WhatsApp number, UK company block retained.
+
+Main menu now: Grooming (Shaving & Trimming / Hair Styling / Hair Removal), Watches,
+Home & Bedding, Wallets, Under Rs 2,000, Contact. Every URL verified against a live
+collection or page.
+
+## Images
+
+Audited all 208 across 47 products. The supplier's ratios are all over the place:
+
+| Ratio | Where |
+|---|---|
+| 1:1 | most grooming, some watches |
+| 3:4 | wallets, several watches, most blankets |
+| 4:3 | straighteners, some curlers |
+| 1080×361 (3:1) | one R-999 curler shot — a banner strip, not a product photo |
+| 873×1802 (1:2) | five KM-519A shots — tall spec infographics |
+
+Resolution ranges from 640×640 to 1080×1802. Roughly a dozen featured images are
+660×660 or 640×640, which is fine on a card but soft on a full product page. That is
+what the supplier provided; nothing to fix short of reshooting.
+
+**Display was inconsistent, and that is fixed.** Horizon's card gallery block exposes an
+aspect-ratio setting but no fit, so it cropped everything to fill the square frame and
+sliced the top and bottom off every portrait shot. `assets/ww-brand.css` now forces
+`object-fit: contain` on card galleries with a white fill and 6% padding, so every card
+is the same square and the whole product stays in shot. Collection banners still cover,
+because those are meant to fill.
+
+Product page galleries were already correct — square frame, `media_fit: contain`.
+
+Theme **Wired & Warped — Light v2** (`199343735161`) carries the image fix and needs
+publishing. Menus, collections and the About page are data, so those are already live.

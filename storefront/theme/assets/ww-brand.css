@@ -200,7 +200,8 @@
   border-block-end: 1px solid var(--ww-line);
 }
 .ww-card__media img {
-  inline-size: 100%; block-size: 100%; object-fit: cover; display: block;
+  inline-size: 100%; block-size: 100%; object-fit: contain; display: block;
+  padding: 7%;
   transition: transform .5s cubic-bezier(.2,.7,.3,1);
 }
 .ww-card:hover .ww-card__media img { transform: scale(1.03); }
@@ -263,3 +264,28 @@
   position: absolute; inline-size: 1px; block-size: 1px;
   overflow: hidden; clip-path: inset(50%); white-space: nowrap;
 }
+
+/* ============================================================ product images
+   The supplier's photography arrives at wildly mixed ratios — 1:1, 3:4, 4:3,
+   and a few extremes like 1080x361 and 873x1802. Horizon's card gallery only
+   exposes an aspect-ratio setting, not a fit, so by default it crops every
+   image to fill the frame and slices the top and bottom off the portraits.
+
+   Fixing it here rather than in the block: one square frame everywhere, and
+   `contain` so the whole product stays in shot. The letterboxing is invisible
+   because the fill matches the card. `!important` is needed to beat Horizon's
+   own object-fit declaration on the same element.
+   ========================================================================== */
+.card-gallery img,
+.product-card__image img,
+.product-card__image > img {
+  object-fit: contain !important;
+  background-color: var(--ww-surface);
+}
+
+/* A little breathing room so products do not touch the card edge. */
+.card-gallery img { padding: 6%; }
+
+/* Collection banner images keep covering — they are meant to fill. */
+.collection-card__image img,
+.banner img { object-fit: cover !important; padding: 0; }
