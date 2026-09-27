@@ -1,44 +1,70 @@
 /* ==========================================================================
-   Wired & Warped — light premium design system
-   Layered over Horizon. Horizon's own components inherit the palette from
-   settings.color_palette; this file adds the brand treatment on top.
+   Wired & Warped — warm dark premium
+   Near-black with a brown undertone, amber accent, condensed uppercase display.
 
-   Restraint is the whole idea here: warm paper rather than cold white,
-   hairlines rather than shadows, one near-black for every action, and a
-   single warm bronze used sparingly. No glows, no gradient text, no grids.
+   Two notes on decisions that are not obvious:
+
+   1. The display face is loaded here rather than through Shopify's font picker.
+      A wrong font handle in settings_data silently falls back and there is no
+      way to preview this store from the build environment, so the risk is not
+      worth it. Loading it in CSS is deterministic.
+
+   2. Supplier photography has white backgrounds baked in. On a dark page a
+      "transparent" product tile is impossible, so the image tile is deliberately
+      warm paper — it reads as a gallery mount rather than an accident.
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
+
 :root {
-  /* Warm paper, not cold white — cold white makes cheap product photography
-     look greyer than it is, and reads as a template rather than a brand. */
-  --ww-bg: #FBFAF8;
-  --ww-surface: #FFFFFF;
-  --ww-surface-2: #F4F2EE;
-  --ww-line: #E7E3DC;
-  --ww-line-strong: #D5CFC4;
-  --ww-text: #16161A;
-  --ww-muted: #6E6A63;
+  /* Warm near-black. Pure black would kill the amber. */
+  --ww-bg: #100D0B;
+  --ww-bg-2: #15110E;
+  --ww-surface: #1B1613;
+  --ww-surface-2: #221C18;
+  --ww-line: #2C2520;
+  --ww-line-strong: #3D342D;
 
-  /* Actions are near-black. A coloured CTA cheapens a premium light layout. */
-  --ww-ink: #1C1C1F;
-  --ww-ink-hover: #000000;
+  --ww-text: #F3ECE1;
+  --ww-muted: #A4968A;
 
-  /* Bronze earns its place only on eyebrows, rank marks and the COD badge. */
-  --ww-accent: #8C6A43;
-  --ww-accent-soft: #F1EADF;
-  --ww-accent-deep: #6B5128;
+  --ww-accent: #C87A45;
+  --ww-accent-hover: #D98D57;
+  --ww-accent-ink: #14100D;
 
-  --ww-radius: 10px;
-  --ww-radius-lg: 16px;
-  --ww-maxw: 1240px;
+  /* Product images arrive on white; the tile leans warm so it sits in the palette. */
+  --ww-tile: #F7F3EC;
 
-  /* Fluid type — holds from 320px up without breakpoints */
-  --ww-display: clamp(2.35rem, 1.5rem + 4.4vw, 4.5rem);
-  --ww-h2: clamp(1.6rem, 1.2rem + 1.9vw, 2.5rem);
-  --ww-body: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
+  --ww-display: 'Oswald', 'Archivo Narrow', 'Helvetica Neue', Arial, sans-serif;
 
-  --ww-pad: clamp(1.15rem, 0.7rem + 2.2vw, 3.25rem);
+  --ww-radius: 2px;
+  --ww-radius-lg: 4px;
+  --ww-maxw: 1400px;
+
+  --ww-hero-title: clamp(2.75rem, 1.4rem + 6.2vw, 6rem);
+  --ww-h2: clamp(1.9rem, 1.2rem + 3vw, 3.4rem);
+  --ww-body: clamp(0.95rem, 0.92rem + 0.2vw, 1.06rem);
+
+  --ww-pad: clamp(1.15rem, 0.7rem + 2.4vw, 4rem);
   --ww-gap: clamp(1rem, 0.6rem + 1.6vw, 2rem);
+}
+
+/* Horizon keys every heading off these. Overriding them here restyles the
+   whole storefront — collection pages, cart, search — not just our sections. */
+:root {
+  --font-h1--family: var(--ww-display);
+  --font-h2--family: var(--ww-display);
+  --font-h3--family: var(--ww-display);
+  --font-h4--family: var(--ww-display);
+  --font-h5--family: var(--ww-display);
+  --font-h6--family: var(--ww-display);
+}
+
+h1, h2, h3, .h1, .h2, .h3 {
+  font-family: var(--ww-display);
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  font-weight: 600;
 }
 
 /* --------------------------------------------------------------- primitives */
@@ -54,111 +80,104 @@
 
 .ww-section { position: relative; background: var(--ww-bg); color: var(--ww-text); }
 
+/* The small amber label above every section heading — the signature of this look. */
 .ww-eyebrow {
-  display: inline-flex; align-items: center; gap: .6rem;
-  font-size: .68rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  display: block;
+  font-family: var(--ww-display);
+  font-size: .78rem; font-weight: 500;
+  letter-spacing: .26em; text-transform: uppercase;
   color: var(--ww-accent);
-}
-.ww-eyebrow::before {
-  content: ""; inline-size: 1.75rem; block-size: 1px;
-  background: currentColor; opacity: .55;
 }
 
 .ww-h2 {
-  font-size: var(--ww-h2); line-height: 1.12; letter-spacing: -0.02em;
-  font-weight: 600; margin: .75rem 0 0; color: var(--ww-text); text-wrap: balance;
+  font-family: var(--ww-display);
+  font-size: var(--ww-h2); line-height: 1.02; letter-spacing: 0.005em;
+  text-transform: uppercase; font-weight: 600;
+  margin: .85rem 0 0; color: var(--ww-text); text-wrap: balance;
 }
 .ww-sub {
-  font-size: var(--ww-body); line-height: 1.7; color: var(--ww-muted);
-  margin: .9rem 0 0; max-width: 58ch; text-wrap: pretty;
+  font-size: var(--ww-body); line-height: 1.75; color: var(--ww-muted);
+  margin: 1.1rem 0 0; max-width: 56ch; text-wrap: pretty;
 }
 
 /* ------------------------------------------------------------------ buttons */
 .ww-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
-  padding: .95rem 1.8rem; border-radius: var(--ww-radius);
-  font-size: .92rem; font-weight: 600; letter-spacing: .01em;
+  padding: 1.05rem 2.1rem; border-radius: var(--ww-radius);
+  font-family: var(--ww-display);
+  font-size: .9rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
   text-decoration: none; cursor: pointer; border: 1px solid transparent;
   transition: background-color .2s ease, border-color .2s ease, color .2s ease;
 }
-.ww-btn--primary { background: var(--ww-ink); color: #FFFFFF; }
-.ww-btn--primary:hover { background: var(--ww-ink-hover); }
+.ww-btn--primary { background: var(--ww-accent); color: var(--ww-accent-ink); }
+.ww-btn--primary:hover { background: var(--ww-accent-hover); }
 
 .ww-btn--ghost {
-  background: transparent; color: var(--ww-text); border-color: var(--ww-line-strong);
+  background: transparent; color: var(--ww-text);
+  border-color: rgba(243, 236, 225, .35);
 }
-.ww-btn--ghost:hover { border-color: var(--ww-text); }
+.ww-btn--ghost:hover { border-color: var(--ww-text); background: rgba(243, 236, 225, .06); }
 
-.ww-btn:focus-visible,
-.ww-card:focus-visible,
-.ww-wa:focus-visible {
-  outline: 2px solid var(--ww-ink); outline-offset: 3px;
+.ww-btn:focus-visible, .ww-card:focus-visible, .ww-wa:focus-visible {
+  outline: 2px solid var(--ww-accent); outline-offset: 3px;
 }
 
 /* --------------------------------------------------------------------- hero */
 .ww-hero {
   position: relative; overflow: hidden;
   background: var(--ww-bg);
-  padding-block: clamp(3.25rem, 2rem + 8vw, 7.5rem);
-  border-block-end: 1px solid var(--ww-line);
+  min-block-size: clamp(30rem, 78vh, 46rem);
+  display: flex; align-items: center;
 }
-/* One barely-there warm wash for depth. No glow, no grid, no gradient text. */
-.ww-hero::before {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: linear-gradient(180deg, #F6F2EB 0%, rgba(251, 250, 248, 0) 62%);
+.ww-hero__bg { position: absolute; inset: 0; z-index: 0; }
+.ww-hero__bg img {
+  inline-size: 100%; block-size: 100%; object-fit: cover; display: block;
 }
-.ww-hero > * { position: relative; z-index: 1; }
+/* Dark wash from the left so the type always has something to sit on, whatever
+   the photograph behind it happens to be doing. */
+.ww-hero__scrim {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(16,13,11,.96) 0%, rgba(16,13,11,.86) 38%, rgba(16,13,11,.35) 72%, rgba(16,13,11,.2) 100%),
+    linear-gradient(0deg, rgba(16,13,11,.75) 0%, rgba(16,13,11,0) 45%);
+}
+/* No photograph yet: a warm pool of light instead of a flat black rectangle. */
+.ww-hero--noimage .ww-hero__scrim {
+  background:
+    radial-gradient(120% 90% at 78% 40%, rgba(200,122,69,.16) 0%, rgba(16,13,11,0) 60%),
+    linear-gradient(90deg, rgba(16,13,11,1) 0%, rgba(16,13,11,.9) 45%, rgba(21,17,14,.75) 100%);
+}
 
-.ww-hero__grid {
-  display: grid; gap: var(--ww-gap); align-items: center;
-  grid-template-columns: 1fr;
-}
-@media (min-width: 900px) {
-  .ww-hero__grid { grid-template-columns: 1.02fr .98fr; gap: clamp(2rem, 4vw, 4.5rem); }
-}
+.ww-hero__inner { position: relative; z-index: 2; width: 100%; padding-block: clamp(3.5rem, 8vw, 6rem); }
+.ww-hero__content { max-width: 40rem; }
 
 .ww-hero__title {
-  font-size: var(--ww-display); line-height: 1.02; letter-spacing: -0.035em;
-  font-weight: 600; margin: 1.1rem 0 0; text-wrap: balance; color: var(--ww-text);
+  font-family: var(--ww-display);
+  font-size: var(--ww-hero-title); line-height: .94; letter-spacing: 0.005em;
+  text-transform: uppercase; font-weight: 600;
+  margin: 1.2rem 0 0; color: var(--ww-text); text-wrap: balance;
 }
-/* Emphasis by colour alone — a solid bronze, never a gradient fill. */
 .ww-hero__title em { font-style: normal; color: var(--ww-accent); }
 
 .ww-hero__lede {
-  font-size: clamp(1rem, .95rem + .35vw, 1.12rem); line-height: 1.65;
-  color: var(--ww-muted); margin: 1.35rem 0 0; max-width: 48ch;
+  font-size: clamp(1rem, .95rem + .35vw, 1.15rem); line-height: 1.7;
+  color: var(--ww-muted); margin: 1.5rem 0 0; max-width: 34rem;
 }
-.ww-hero__cta { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2.25rem; }
+.ww-hero__cta { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2.4rem; }
 
-.ww-hero__media {
-  position: relative; border-radius: var(--ww-radius-lg); overflow: hidden;
-  background: var(--ww-surface-2);
-  border: 1px solid var(--ww-line);
-  aspect-ratio: 4 / 3;
-  display: grid; place-items: center;
-}
-.ww-hero__media img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
-/* No hero image set: one centred column rather than a gap where a box was. */
-.ww-hero__grid--solo { max-width: 46rem; text-align: center; }
-.ww-hero__grid--solo .ww-eyebrow { justify-content: center; }
-.ww-hero__grid--solo .ww-hero__lede { margin-inline: auto; }
-.ww-hero__grid--solo .ww-hero__cta,
-.ww-hero__grid--solo .ww-ladder { justify-content: center; }
-@media (min-width: 900px) {
-  .ww-hero__grid--solo { grid-template-columns: 1fr; margin-inline: auto; }
-}
-
-/* trust chips under the hero */
-.ww-ladder { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+.ww-ladder { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2.25rem; }
 .ww-chip {
-  font-size: .76rem; font-weight: 500; color: var(--ww-muted);
-  padding: .5rem .9rem; border: 1px solid var(--ww-line);
-  border-radius: 999px; background: var(--ww-surface);
+  font-family: var(--ww-display);
+  font-size: .72rem; font-weight: 400; color: var(--ww-muted);
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: .55rem .95rem; border: 1px solid var(--ww-line-strong);
+  border-radius: var(--ww-radius); background: rgba(243,236,225,.03);
 }
-.ww-chip strong { color: var(--ww-text); font-weight: 650; }
+.ww-chip strong { color: var(--ww-text); font-weight: 500; }
 
 /* ---------------------------------------------------------------- trust bar */
-.ww-trust { background: var(--ww-surface); border-block-end: 1px solid var(--ww-line); }
+.ww-trust { background: var(--ww-bg-2); border-block: 1px solid var(--ww-line); }
 .ww-trust__grid {
   display: grid; gap: 1px; background: var(--ww-line);
   grid-template-columns: repeat(2, 1fr);
@@ -166,38 +185,37 @@
 @media (min-width: 780px) { .ww-trust__grid { grid-template-columns: repeat(4, 1fr); } }
 
 .ww-trust__item {
-  background: var(--ww-surface); padding: 1.6rem clamp(.9rem, 2vw, 1.6rem);
-  display: flex; flex-direction: column; gap: .35rem; align-items: flex-start;
+  background: var(--ww-bg-2); padding: 1.75rem clamp(.9rem, 2vw, 1.75rem);
+  display: flex; flex-direction: column; gap: .45rem; align-items: flex-start;
 }
-.ww-trust__icon { color: var(--ww-accent); inline-size: 20px; block-size: 20px; }
-.ww-trust__t { font-size: .9rem; font-weight: 650; color: var(--ww-text); }
-.ww-trust__d { font-size: .78rem; line-height: 1.55; color: var(--ww-muted); }
+.ww-trust__icon { color: var(--ww-accent); inline-size: 22px; block-size: 22px; }
+.ww-trust__t {
+  font-family: var(--ww-display); font-size: .85rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ww-text);
+}
+.ww-trust__d { font-size: .8rem; line-height: 1.6; color: var(--ww-muted); }
 
 /* --------------------------------------------------------------- hero cards */
-.ww-heroes { padding-block: clamp(3.25rem, 2rem + 5vw, 6.5rem); }
-.ww-heroes__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem; }
+.ww-heroes { padding-block: clamp(3.5rem, 2rem + 5vw, 7rem); }
+.ww-heroes__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1.25rem; }
 
 .ww-cards {
-  display: grid; gap: clamp(.9rem, 1.6vw, 1.5rem); margin-top: 2.75rem;
+  display: grid; gap: clamp(.9rem, 1.6vw, 1.75rem); margin-top: 3rem;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
 }
 .ww-card {
   position: relative; display: flex; flex-direction: column;
   background: var(--ww-surface); border: 1px solid var(--ww-line);
   border-radius: var(--ww-radius-lg); overflow: hidden; text-decoration: none;
-  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  transition: border-color .22s ease, transform .22s ease;
 }
-/* A neutral, shallow lift. Nothing coloured, nothing that reads as a glow. */
-.ww-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--ww-line-strong);
-  box-shadow: 0 12px 28px -18px rgba(22, 22, 26, .35);
-}
+.ww-card:hover { transform: translateY(-3px); border-color: var(--ww-line-strong); }
+
+/* Warm paper mount — see the note at the top about baked-in white backgrounds. */
 .ww-card__media {
   position: relative; aspect-ratio: 1; overflow: hidden;
-  background: var(--ww-surface-2);
+  background: var(--ww-tile);
   display: grid; place-items: center;
-  border-block-end: 1px solid var(--ww-line);
 }
 .ww-card__media img {
   inline-size: 100%; block-size: 100%; object-fit: contain; display: block;
@@ -205,39 +223,50 @@
   transition: transform .5s cubic-bezier(.2,.7,.3,1);
 }
 .ww-card:hover .ww-card__media img { transform: scale(1.03); }
-.ww-card__ph { color: var(--ww-muted); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; }
+.ww-card__ph { color: #B9AFA2; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; }
 
 .ww-card__rank {
   position: absolute; inset-block-start: .8rem; inset-inline-start: .8rem;
-  font-size: .66rem; font-weight: 700; letter-spacing: .12em;
-  color: var(--ww-accent-deep); background: rgba(255, 255, 255, .92);
-  border: 1px solid var(--ww-line); backdrop-filter: blur(4px);
-  padding: .32rem .58rem; border-radius: 999px;
+  font-family: var(--ww-display);
+  font-size: .68rem; font-weight: 500; letter-spacing: .14em;
+  color: var(--ww-accent-ink); background: var(--ww-accent);
+  padding: .34rem .6rem; border-radius: var(--ww-radius);
 }
-.ww-card__body { padding: 1.15rem 1.15rem 1.3rem; display: flex; flex-direction: column; gap: .35rem; flex: 1; }
-.ww-card__hook { font-size: .67rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ww-accent); }
-.ww-card__title { font-size: .97rem; font-weight: 550; line-height: 1.38; color: var(--ww-text); margin: 0; }
-.ww-card__foot { margin-top: auto; padding-top: .9rem; display: flex; align-items: baseline; gap: .5rem; }
-.ww-card__price { font-size: 1.08rem; font-weight: 650; color: var(--ww-text); letter-spacing: -0.015em; }
+.ww-card__body { padding: 1.25rem 1.25rem 1.4rem; display: flex; flex-direction: column; gap: .4rem; flex: 1; }
+.ww-card__hook {
+  font-family: var(--ww-display); font-size: .68rem; font-weight: 400;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--ww-accent);
+}
+.ww-card__title { font-size: .95rem; font-weight: 500; line-height: 1.45; color: var(--ww-text); margin: 0; }
+.ww-card__foot { margin-top: auto; padding-top: 1rem; display: flex; align-items: baseline; gap: .5rem; }
+.ww-card__price {
+  font-family: var(--ww-display); font-size: 1.15rem; font-weight: 500;
+  color: var(--ww-text); letter-spacing: .02em;
+}
 .ww-card__was { font-size: .82rem; color: var(--ww-muted); text-decoration: line-through; }
 .ww-card__cod {
-  margin-top: .6rem; align-self: flex-start;
-  font-size: .67rem; font-weight: 600; letter-spacing: .05em;
-  color: var(--ww-accent-deep); border: 1px solid var(--ww-line);
-  background: var(--ww-accent-soft); padding: .28rem .55rem; border-radius: 6px;
+  margin-top: .65rem; align-self: flex-start;
+  font-family: var(--ww-display); font-size: .66rem; font-weight: 400;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ww-accent); border: 1px solid rgba(200,122,69,.4);
+  background: rgba(200,122,69,.09); padding: .3rem .6rem; border-radius: var(--ww-radius);
 }
 
 /* ---------------------------------------------------------------------- why */
-.ww-why {
-  padding-block: clamp(3.25rem, 2rem + 5vw, 6.5rem);
-  border-block-start: 1px solid var(--ww-line);
-  background: var(--ww-surface);
+.ww-why { padding-block: clamp(3.5rem, 2rem + 5vw, 7rem); background: var(--ww-bg-2); border-block-start: 1px solid var(--ww-line); }
+.ww-why__grid { display: grid; gap: clamp(.75rem, 1.4vw, 1.25rem); margin-top: 3rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+/* Bordered plates, matching the SMALL BATCH / CLEAN FORMULAS row in the brief. */
+.ww-why__item {
+  padding: 1.9rem 1.6rem; border: 1px solid var(--ww-line-strong);
+  border-radius: var(--ww-radius); background: transparent;
 }
-.ww-why__grid { display: grid; gap: var(--ww-gap); margin-top: 2.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
-.ww-why__item { padding: 1.75rem; border: 1px solid var(--ww-line); border-radius: var(--ww-radius-lg); background: var(--ww-bg); }
-.ww-why__n { font-size: .7rem; font-weight: 700; color: var(--ww-accent); letter-spacing: .16em; }
-.ww-why__t { font-size: 1.05rem; font-weight: 600; margin: .8rem 0 .45rem; color: var(--ww-text); }
-.ww-why__d { font-size: .88rem; line-height: 1.65; color: var(--ww-muted); margin: 0; }
+.ww-why__n { font-family: var(--ww-display); font-size: .7rem; font-weight: 500; color: var(--ww-accent); letter-spacing: .2em; }
+.ww-why__t {
+  font-family: var(--ww-display); font-size: 1rem; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  margin: .9rem 0 .55rem; color: var(--ww-text);
+}
+.ww-why__d { font-size: .87rem; line-height: 1.7; color: var(--ww-muted); margin: 0; }
 
 /* ----------------------------------------------------------- whatsapp float */
 .ww-wa {
@@ -245,14 +274,36 @@
   inset-block-end: max(1.1rem, env(safe-area-inset-bottom));
   inset-inline-end: 1.1rem;
   display: inline-flex; align-items: center; gap: .6rem;
-  padding: .8rem 1.2rem; border-radius: 999px;
-  background: #25D366; color: #04240F; font-weight: 650; font-size: .88rem;
-  text-decoration: none; box-shadow: 0 8px 24px -12px rgba(22, 22, 26, .45);
+  padding: .85rem 1.25rem; border-radius: 999px;
+  background: #25D366; color: #04240F;
+  font-family: var(--ww-display); font-weight: 500; font-size: .82rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  text-decoration: none; box-shadow: 0 10px 30px -10px rgba(0,0,0,.8);
   transition: transform .18s ease;
 }
 .ww-wa:hover { transform: translateY(-2px); }
 .ww-wa svg { inline-size: 20px; block-size: 20px; flex: none; }
 @media (max-width: 640px) { .ww-wa__label { display: none; } .ww-wa { padding: .85rem; } }
+
+/* ============================================================ product images
+   Horizon's card gallery exposes an aspect ratio but no fit, so by default it
+   crops to fill and slices the top and bottom off every portrait shot. Contain
+   it in a square warm-paper tile so every card is the same shape and the whole
+   product stays in frame. !important beats Horizon's own declaration.
+   ========================================================================== */
+.card-gallery img,
+.product-card__image img,
+.product-card__image > img {
+  object-fit: contain !important;
+  background-color: var(--ww-tile);
+  padding: 6%;
+}
+/* Collection and banner imagery is meant to fill — leave those covering. */
+.collection-card__image img,
+.banner img { object-fit: cover !important; padding: 0; background: none; }
+
+/* Product page gallery sits on the same warm mount. */
+.product-media-container img { background-color: var(--ww-tile); }
 
 /* ------------------------------------------------------------- a11y/motion  */
 @media (prefers-reduced-motion: reduce) {
@@ -264,28 +315,3 @@
   position: absolute; inline-size: 1px; block-size: 1px;
   overflow: hidden; clip-path: inset(50%); white-space: nowrap;
 }
-
-/* ============================================================ product images
-   The supplier's photography arrives at wildly mixed ratios — 1:1, 3:4, 4:3,
-   and a few extremes like 1080x361 and 873x1802. Horizon's card gallery only
-   exposes an aspect-ratio setting, not a fit, so by default it crops every
-   image to fill the frame and slices the top and bottom off the portraits.
-
-   Fixing it here rather than in the block: one square frame everywhere, and
-   `contain` so the whole product stays in shot. The letterboxing is invisible
-   because the fill matches the card. `!important` is needed to beat Horizon's
-   own object-fit declaration on the same element.
-   ========================================================================== */
-.card-gallery img,
-.product-card__image img,
-.product-card__image > img {
-  object-fit: contain !important;
-  background-color: var(--ww-surface);
-}
-
-/* A little breathing room so products do not touch the card edge. */
-.card-gallery img { padding: 6%; }
-
-/* Collection banner images keep covering — they are meant to fill. */
-.collection-card__image img,
-.banner img { object-fit: cover !important; padding: 0; }
