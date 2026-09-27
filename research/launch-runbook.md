@@ -170,5 +170,21 @@ because those are meant to fill.
 
 Product page galleries were already correct — square frame, `media_fit: contain`.
 
-Theme **Wired & Warped — Light v2** (`199343735161`) carries the image fix and needs
+Theme `199343735161`, now renamed **Wired & Warped — Warm Dark**, carries the image fix
+and the Northridge-style warm dark design (see `research/northridge-theme.md`). It needs
 publishing. Menus, collections and the About page are data, so those are already live.
+
+Uploaded 2026-09-27 via staged upload, then verified by re-reading each file from Shopify:
+
+| File | Result |
+|------|--------|
+| `assets/ww-brand.css` | md5 matches repo |
+| `sections/ww-hero.liquid` | md5 matches repo |
+| `sections/footer-group.json` | md5 matches repo |
+| `templates/index.json` | md5 matches repo |
+| `templates/product.json` | md5 matches repo |
+| `config/settings_data.json` | Shopify re-serialises this file, so the md5 differs (3,635 vs 3,629 bytes). Every value was read back and checked: palette, amber buttons, uppercase H1–H3, 2px radii |
+
+`themeFilesUpsert` returned an empty `upsertedThemeFiles` even though all six writes
+succeeded, and the first read-back straight after it served stale content for two
+templates. Trust a second read-back, not the mutation response.
